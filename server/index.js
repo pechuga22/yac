@@ -16,12 +16,21 @@ io.on('connection', (socket) => {
         const { error, user} = addUser({id: socket.id, username});
 
         if(error) return callback(error);
-        socket.join(user)
+        socket.emit('message', { user:'admin', text:`${user.username}, join to chat`});
+        
+        socket.join(user);
+        callback();
+    });
+    socket.on('sendMessage', (message,callback) => {
+        const user = getUser(socket.id);
+        io.to(user).emit('message',{user:user.username, text: message});
+
+        callback();
     });
    
     socket.on('disconnect', () => {
         console.log('User had left!!');
-    })
+    });
 });
 
 app.use(router)

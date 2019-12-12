@@ -1,6 +1,6 @@
 const users = [];
 
-exports.addUser = ({id,username}) => {
+const addUser = ({id,username}) => {
     username = username.trim().toLowerCase();
 
     const existingUser = users.find((user) => user.username === username);
@@ -15,7 +15,7 @@ exports.addUser = ({id,username}) => {
     return { user}
 }
 
- exports.removeUser = (id) => {
+ const removeUser = (id) => {
     const index = users.findIndex((user) => user.id === id);
 
     if(index !== -1){
@@ -24,6 +24,8 @@ exports.addUser = ({id,username}) => {
 
 }
 
-exports.getUser = (id) => users.find((user) => user.id ===id);
+const getUser = (id) => users.find((user) => user.id ===id);
+
+module.exports = {addUser, removeUser, getUser};
 
 
